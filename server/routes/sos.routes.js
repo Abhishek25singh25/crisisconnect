@@ -1,14 +1,11 @@
 const { Router } = require("express");
 const authenticateToken = require("../middleware/auth.middleware");
 const authorizeRoles = require("../middleware/role.middleware");
-
-const { createSos,getAllSOS,acceptSOS, resloveSOS,  getMyAlerts} = require ("../controllers/sos.controller");
-
+const { createSos, getAllSOS, acceptSOS, resloveSOS, getMyAlerts } = require("../controllers/sos.controller");
 const router = Router();
-
 router.post("/create", authenticateToken, authorizeRoles("victim"), createSos);
-router.get("/all", authenticateToken, authorizeRoles("volunteer"),getAllSOS);
+router.get("/all", authenticateToken, authorizeRoles("volunteer"), getAllSOS);
 router.put("/accept/:id", authenticateToken, authorizeRoles("volunteer"), acceptSOS);
-router.put("/resolve/:id", authenticateToken, authorizeRoles("volunteer"), resloveSOS);router.get("/my-alerts", authenticateToken, authorizeRoles("victim"), getMyAlerts)
-
+router.put("/resolve/:id", authenticateToken, authorizeRoles("volunteer"), resloveSOS);
+router.get("/my-alerts", authenticateToken, authorizeRoles("victim"), getMyAlerts);
 module.exports = router;

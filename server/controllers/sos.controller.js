@@ -5,7 +5,6 @@ exports.createSos = async (req, res) => {
     try {
         const { emergency, description, severity, location } = req.body;
         const victimId = req.user.id;
-
         const sosAlert = await SOSAlert.create({
             victim: victimId,
             emergency,
@@ -13,10 +12,8 @@ exports.createSos = async (req, res) => {
             severity,
             location
         });
-
         const io = getIO()
-            console.log("IO instance:", io ? "exists" : "undefined")
-            if(io) {
+        if(io) {
             io.emit("sos:received", sosAlert)
         }
         return res.status(201).json({

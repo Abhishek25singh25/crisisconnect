@@ -12,7 +12,7 @@ const VictimDashboard = () => {
     const [description, setDescription] = useState("");
     const [severity, setSeverity] = useState("critical");
     const [myAlerts, setMyAlerts] = useState([]);
-
+    
     useEffect(() => {
         const fetchAlerts = async () => {
             try {
@@ -27,48 +27,35 @@ const VictimDashboard = () => {
     }, []);
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        navigator.geolocation.getCurrentPosition(
-            async (position) => {
-                const location = {
-                    type: "Point",
-                    coordinates: [
-                        position.coords.longitude,
-                        position.coords.latitude,
-                    ],
-                };
-
-                try {
-                    await api.post("/api/sos/create", {
-                        emergency: emergencyType,
-                        description,
-                        severity,
-                        location,
-                    });
-
-                    alert("SOS Sent!");
-
-                    setDescription("");
-                    setEmergencyType("medical");
-                    setSeverity("critical");
-                    setShowForm(false);
-
-                    // Refresh alerts after creating new SOS
-                    const res = await api.get("/api/sos/my-alerts");
-                    setMyAlerts(res.data.data);
-                } catch (error) {
-                    console.error(error);
-                    alert("Failed to send SOS");
-                }
-            },
-            (error) => {
-                console.error(error);
-                alert("Unable to access location");
-            }
-        );
-    };
-
+    e.preventDefault();
+    navigator.geolocation.getCurrentPosition(async (position) => {
+        const location = {
+            type: "Point",
+            coordinates: [
+                position.coords.longitude,
+                position.coords.latitude,
+            ],
+        };
+        try {
+            await api.post("/api/sos/create", {
+                emergency: emergencyType,
+                description,
+                severity,
+                location,
+            });
+            alert("SOS Sent!");
+            setDescription("");
+            setEmergencyType("medical");
+            setSeverity("critical");
+            setShowForm(false);
+            const res = await api.get("/api/sos/my-alerts");
+            setMyAlerts(res.data.data);
+        } catch (error) {
+            console.error(error);
+            alert("Failed to send SOS");
+        }
+    });
+};
     return (
         <div className="min-h-screen bg-gray-100">
             {/* Navbar */}
@@ -170,6 +157,8 @@ const VictimDashboard = () => {
                                     className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-red-500"
                                 />
                             </div>
+                            
+                            
 
                             {/* Severity */}
                             <div>

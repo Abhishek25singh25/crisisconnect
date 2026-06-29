@@ -185,6 +185,18 @@ return (
                                 {alert.description}
                             </p>
 
+                            {alert.images && alert.images.length > 0 && (
+                                <div className="flex gap-2 mt-2 mb-4 flex-wrap">
+                                    {alert.images.map((img, i) => (
+                                        <img
+                                            key={i}
+                                            src={img}
+                                            className="w-24 h-24 object-cover rounded"
+                                        />
+                                    ))}
+                                </div>
+                            )}
+
                             <div className="bg-gray-50 border rounded-lg p-4 mb-4">
                                 <h4 className="font-semibold text-gray-700 mb-2">
                                     Victim Details

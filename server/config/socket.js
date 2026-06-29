@@ -1,6 +1,9 @@
 const initSocket = (io) => {
     io.on("connection",(socket)=> {
         console.log("User connected:",socket.id);
+        socket.onAny((event, ...args) => {
+            console.log("Socket event:", event, args);
+        });
 
         socket.on("sos:new",(data)=> {
             io.emit("sos:received",data);

@@ -9,7 +9,7 @@ const sosSchema = new mongoose.Schema(
         },
         emergency: {
             type: String,
-            enum: ["medical", "fire", "rescue", "flood", "other"],
+            enum: ["medical", "flood", "fire", "rescue", "earthquake", "other"],
             required: true
         },
         description: {
