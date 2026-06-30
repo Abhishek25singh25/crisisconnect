@@ -20,6 +20,7 @@ exports.addResource = async (req,res) => {
             data: resource
         });
     } catch (error) {
+        console.error("ADD RESOURCE ERROR:", error.message)
         return res.status(500).json ({
             success: false,
             message: error.message
