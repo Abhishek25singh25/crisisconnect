@@ -1,4 +1,5 @@
 sonar.projectKey=Abhishek25singh25_crisisconnect2
 sonar.organization=abhishek25singh25
+sonar.host.url=https://sonarcloud.io
 sonar.sources=client/src,server
-sonar.exclusions=**/node_modules/**
+sonar.exclusions=**/node_modules/**,**/dist/**
