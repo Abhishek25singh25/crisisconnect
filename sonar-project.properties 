@@ -1,0 +1,4 @@
+sonar.projectKey=Abhishek25singh25_crisisconnect2
+sonar.organization=abhishek25singh25
+sonar.sources=client/src,server
+sonar.exclusions=**/node_modules/**

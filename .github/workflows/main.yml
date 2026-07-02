@@ -1,0 +1,29 @@
+name: Main CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+
+  docker:
+    needs: build
+    uses: ./.github/workflows/docker.yml
+    secrets: inherit
+
+  dependency-scan:
+    needs: build
+    uses: ./.github/workflows/dep-scan.yml
+
+  trivy-scan:
+    needs: docker
+    uses: ./.github/workflows/trivy-scan.yml
+
+  sonarqube:
+    needs: build
+    uses: ./.github/workflows/sonarqube.yml
+    secrets: inherit

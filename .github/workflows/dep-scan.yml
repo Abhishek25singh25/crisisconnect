@@ -1,10 +1,10 @@
-name: Build and Test
+name: Dependency Scan
 
 on:
   workflow_call:
-  
+
 jobs:
-  build-test:
+  dependency-scan:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -15,18 +15,18 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install backend dependencies
+      - name: Install server dependencies
         working-directory: ./server
         run: npm install
 
-      - name: Install frontend dependencies
+      - name: Audit server dependencies
+        working-directory: ./server
+        run: npm audit --audit-level=high || true
+
+      - name: Install client dependencies
         working-directory: ./client
         run: npm install
 
-      - name: Build frontend
+      - name: Audit client dependencies
         working-directory: ./client
-        run: npm run build
-
-      - name: Check server syntax
-        working-directory: ./server
-        run: node -c server.js
+        run: npm audit --audit-level=high || true

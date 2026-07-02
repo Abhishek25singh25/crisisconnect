@@ -1,0 +1,32 @@
+name: Trivy Scan
+
+on:
+  workflow_call:
+    
+jobs:
+  Security-Scan:
+    runs-on: ubuntu-latest
+    steps:
+      
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Trivy scan on server image
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: abhisheksingh250703/crisisconnect-server:latest
+          format: table
+          exit-code: 0
+          severity: CRITICAL,HIGH 
+
+      - name: Run Trivy scan on client image
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: abhisheksingh250703/crisisconnect-client:latest
+          format: table
+          exit-code: 0
+          severity: CRITICAL,HIGH
+
+
+
+
